@@ -9,9 +9,9 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-gaps inner 5
-gaps outer 5
-smart_gaps on
+# gaps inner 5
+# gaps outer 5
+# smart_gaps on
 
 set $mod Mod4
 
@@ -34,6 +34,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 exec --no-startup-id copyq
+exec --no-startup-id ffmpeg
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -49,7 +50,7 @@ floating_modifier $mod
 bindsym $mod+Return exec alacritty
 
 # start chrome
-bindsym $mod+space exec chrome
+bindsym $mod+space exec brave-browser
 
 
 # invert colors
@@ -58,6 +59,9 @@ bindsym $mod+i exec xcalib -invert -alter
 # copyq
 bindsym $mod+Shift+c exec copyq menu
 
+# record screen
+bindsym $mod+Shift+s exec ffmpeg -f x11grab -video_size 1920x1080 -framerate 15 -i :0.0 -f alsa -i default "$(date).mp4"
+bindsym $mod+Shift+w exec pkill -INT ffmpeg
 
 bindsym Shift+Print exec flameshot gui
 
@@ -192,5 +196,3 @@ bar {
 }
 
 for_window [class="xdman"] move container to workspace $ws2
-exec picom -CGb
-exec feh --bg-scale /home/omer/Desktop/img.jpg
